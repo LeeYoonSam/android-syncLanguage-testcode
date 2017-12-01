@@ -4,6 +4,28 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+ext.python = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3' // 파이썬 실행경로
+ext.download_res_folder = 'src/main/res_down' //저장될 별도의 리소스 폴더
+ext.script_path = 'script/make_values_string.py' //스크립트 저장 경로
+ext.json_key_path = 'script/AutoTranslate-e0b894d394a1.json' //구글 키 저장 경로
+
+task StringResourceSync(type: Exec) {
+    doFirst {
+        println ":::" + "Start to get String Resources..." + ":::"
+    }
+    // window
+//    commandLine = ['cmd', '/c', 'python' , script_path, GoogleDocId,download_res_folder]
+    //mac
+//    commandLine =['python', script_path, download_res_folder, json_key_path]
+    commandLine =[python, script_path, download_res_folder, json_key_path]
+
+    doLast {
+        println ":::" + "Finish to get String Resources..." + ":::"
+    }
+}
+
+preBuild.dependsOn StringResourceSync
+
 android {
     compileSdkVersion 26
     defaultConfig {
@@ -34,6 +56,8 @@ android {
     sourceSets {
         test.java.srcDirs += 'src/test/java'
         androidTest.java.srcDirs += 'src/androidTest/java'
+
+        main.res.srcDirs += download_res_folder
     }
 
     afterEvaluate {
@@ -65,7 +89,7 @@ dependencies {
 
 
     testCompile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.6'
-    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.0.6'
+//    testCompile 'org.jetbrains.kotlin:kotlin-test-junit:1.0.6'
     testCompile "com.nhaarman:mockito-kotlin:1.1.0"
     testCompile 'org.amshove.kluent:kluent:1.14'
 }
