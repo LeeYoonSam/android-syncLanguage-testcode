@@ -1,4 +1,4 @@
-# androidTest-Kotlin
+# 안드로이드 다국어리소스 자동화 및 테스트 코드작성
 
 ## 1. 구글 Drive, Sheet를 이용한 실시간 번역
 
