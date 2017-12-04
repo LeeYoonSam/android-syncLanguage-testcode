@@ -13,6 +13,7 @@ import sys
 # sys.setdefaultencoding('utf-8')
 
 
+# 각 번역에 대한 key값이 4번째 컬럼에 위치함
 DEFINE_KEY_COL = 4
 
 def makeStringResources():
